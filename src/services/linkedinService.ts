@@ -1,5 +1,5 @@
 
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 // Types for LinkedIn interactions
 export interface LinkedInPost {
@@ -117,11 +117,7 @@ export class LinkedInService {
         return await response.json();
       } catch (error) {
         console.error('Error fetching posts:', error);
-        toast({
-          title: "Error",
-          description: "Failed to fetch recommended posts",
-          duration: 3000,
-        });
+        // Remove toast call from here - it should only be called from components
         return [];
       }
     }
@@ -165,11 +161,7 @@ export class LinkedInService {
         return await response.json();
       } catch (error) {
         console.error('Error generating comment:', error);
-        toast({
-          title: "Error",
-          description: "Failed to generate comment",
-          duration: 3000,
-        });
+        // Remove toast call from here
         throw error;
       }
     }
@@ -204,11 +196,7 @@ export class LinkedInService {
         return true;
       } catch (error) {
         console.error('Error posting comment:', error);
-        toast({
-          title: "Error",
-          description: "Failed to post comment",
-          duration: 3000,
-        });
+        // Remove toast call from here
         return false;
       }
     }
@@ -243,11 +231,7 @@ export class LinkedInService {
         return true;
       } catch (error) {
         console.error('Error scheduling comment:', error);
-        toast({
-          title: "Error",
-          description: "Failed to schedule comment",
-          duration: 3000,
-        });
+        // Remove toast call from here
         return false;
       }
     }
