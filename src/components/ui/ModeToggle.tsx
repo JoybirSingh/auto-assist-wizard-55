@@ -3,7 +3,7 @@ import React from 'react';
 import { useMode } from '@/context/ModeContext';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Robot, UserCircle } from 'lucide-react';
+import { Bot, UserCircle } from 'lucide-react';
 
 const ModeToggle = () => {
   const { mode, setMode } = useMode();
@@ -31,7 +31,7 @@ const ModeToggle = () => {
           onClick={() => setMode('autonomous')}
           aria-label="Switch to autonomous mode"
         >
-          <Robot className="w-4 h-4" />
+          <Bot className="w-4 h-4" />
           <span>Autonomous</span>
         </button>
         
