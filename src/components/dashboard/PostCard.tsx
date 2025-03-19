@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
 import { cn } from '@/lib/utils';
-import { MessageCircle, ThumbsUp, ArrowRight, Check, Award } from 'lucide-react';
+import { MessageCircle, ThumbsUp, ArrowRight, Check, Award, Sparkles } from 'lucide-react';
 import linkedinService from '@/services/linkedinService';
 import { useToast } from "@/components/ui/use-toast";
 
@@ -31,6 +31,13 @@ const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
   const { toast } = useToast();
   const [isGeneratingComment, setIsGeneratingComment] = useState(false);
   const [commentGenerated, setCommentGenerated] = useState(false);
+  const [hasMimicryEnabled, setHasMimicryEnabled] = useState(false);
+
+  useEffect(() => {
+    // Check if there are any writing samples for style mimicry
+    const samples = linkedinService.getWritingSamples();
+    setHasMimicryEnabled(samples.length > 0);
+  }, []);
 
   const handleGenerateComment = async () => {
     setIsGeneratingComment(true);
@@ -152,11 +159,11 @@ const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
               </>
             ) : (
               <>
-                <MessageCircle className="w-4 h-4" />
+                {hasMimicryEnabled ? <Sparkles className="w-4 h-4" /> : <MessageCircle className="w-4 h-4" />}
                 <span>
                   {mode === 'assisted' 
-                    ? 'Generate Comment Suggestion' 
-                    : 'Auto-Generate & Post Comment'}
+                    ? `Generate ${hasMimicryEnabled ? 'Personalized' : ''} Comment` 
+                    : `Auto-Generate & Post ${hasMimicryEnabled ? 'Personalized' : ''} Comment`}
                 </span>
               </>
             )}

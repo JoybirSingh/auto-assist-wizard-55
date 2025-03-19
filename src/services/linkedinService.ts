@@ -1,4 +1,3 @@
-
 import { useToast } from "@/hooks/use-toast";
 
 // Types for LinkedIn interactions
@@ -24,6 +23,12 @@ export interface GeneratedComment {
   timestamp: string;
 }
 
+export interface WritingSample {
+  id: string;
+  content: string;
+  createdAt: string;
+}
+
 // Mock data function - in a real app, this would connect to a backend
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -31,8 +36,15 @@ export class LinkedInService {
   private static instance: LinkedInService;
   private apiKey: string | null = null;
   private mockMode = true; // For demo purposes
+  private writingSamples: WritingSample[] = [];
 
-  private constructor() {}
+  private constructor() {
+    // Load writing samples from localStorage if they exist
+    const savedSamples = localStorage.getItem('linkedin_writing_samples');
+    if (savedSamples) {
+      this.writingSamples = JSON.parse(savedSamples);
+    }
+  }
 
   public static getInstance(): LinkedInService {
     if (!LinkedInService.instance) {
@@ -52,6 +64,43 @@ export class LinkedInService {
       this.apiKey = localStorage.getItem('linkedin_api_key');
     }
     return this.apiKey;
+  }
+
+  // Add writing sample for style mimicry
+  addWritingSample(content: string): WritingSample {
+    const sample: WritingSample = {
+      id: `sample-${Date.now()}`,
+      content: content.trim(),
+      createdAt: new Date().toISOString()
+    };
+    
+    this.writingSamples.push(sample);
+    this.saveWritingSamples();
+    
+    return sample;
+  }
+  
+  // Get all writing samples
+  getWritingSamples(): WritingSample[] {
+    return [...this.writingSamples];
+  }
+  
+  // Delete a writing sample
+  deleteWritingSample(id: string): boolean {
+    const initialLength = this.writingSamples.length;
+    this.writingSamples = this.writingSamples.filter(sample => sample.id !== id);
+    
+    if (this.writingSamples.length !== initialLength) {
+      this.saveWritingSamples();
+      return true;
+    }
+    
+    return false;
+  }
+  
+  // Save writing samples to localStorage
+  private saveWritingSamples(): void {
+    localStorage.setItem('linkedin_writing_samples', JSON.stringify(this.writingSamples));
   }
 
   // Fetch recommended posts - in real app, would call LinkedIn API or scraper
@@ -123,17 +172,29 @@ export class LinkedInService {
     }
   }
 
-  // Generate comment for a post
+  // Generate comment for a post with style mimicry
   async generateComment(postId: string, tone: string): Promise<GeneratedComment> {
     if (this.mockMode) {
       // Simulate API delay
       await delay(1500);
       
+      // Get writing samples for style mimicry if available
+      const hasSamples = this.writingSamples.length > 0;
+      let commentText = '';
+      
+      if (hasSamples) {
+        // In a real implementation, this would use an AI model that considers the writing samples
+        // For the mock implementation, we'll just create a comment that mentions style mimicry
+        commentText = `This is a generated ${tone} comment for post ID ${postId} that mimics your personal writing style based on ${this.writingSamples.length} sample(s). In a real implementation, the AI would analyze your samples and generate text that sounds like you wrote it.`;
+      } else {
+        commentText = `This is a generated ${tone} comment for post ID ${postId}. In a real implementation, this would be created by an AI model trained on professional content.`;
+      }
+      
       // Return a mock generated comment
       return {
         id: `comment-${Date.now()}`,
         postId,
-        text: `This is a generated ${tone} comment for post ID ${postId}. In a real implementation, this would be created by an AI model trained on professional content.`,
+        text: commentText,
         tone,
         status: 'pending',
         timestamp: 'Just now'
@@ -145,13 +206,20 @@ export class LinkedInService {
       }
       
       try {
+        // Get writing samples for style mimicry
+        const samples = this.getWritingSamples();
+        
         const response = await fetch('https://api.example.com/linkedin/generate-comment', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${this.apiKey}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ postId, tone })
+          body: JSON.stringify({ 
+            postId, 
+            tone,
+            writingSamples: samples // Send writing samples to the API
+          })
         });
         
         if (!response.ok) {

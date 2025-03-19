@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
 import { cn } from '@/lib/utils';
 import { 
   Settings, Bell, Clock, MessageSquare, Sliders, Shield, 
-  CheckCircle2, Users, BarChart2, User
+  CheckCircle2, Users, BarChart2, User, Pencil
 } from 'lucide-react';
 import ApiConfigForm from './ApiConfigForm';
+import WritingSamples from './WritingSamples';
+import linkedinService from '@/services/linkedinService';
 
 type FrequencyOption = 'low' | 'medium' | 'high';
 type TimeOption = 'morning' | 'afternoon' | 'evening' | 'spread';
@@ -18,6 +20,17 @@ const SettingsPanel = () => {
   const [tone, setTone] = useState<string>('professional');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [safetyThreshold, setSafetyThreshold] = useState(80);
+
+  useEffect(() => {
+    const savedTone = localStorage.getItem('selectedTone');
+    if (savedTone) {
+      setTone(savedTone.toLowerCase());
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('selectedTone', tone);
+  }, [tone]);
 
   const frequencyMapping = {
     low: '5-10 engagements per day',
@@ -137,6 +150,20 @@ const SettingsPanel = () => {
           transition={{ duration: 0.4, delay: 0.1 }}
         >
           <div className="flex items-center gap-3 mb-5">
+            <Pencil className="w-5 h-5 text-indigo-600" />
+            <h2 className="text-xl font-medium">AI Style Mimicry</h2>
+          </div>
+
+          <WritingSamples />
+        </motion.div>
+
+        <motion.div 
+          className="glass-card rounded-xl p-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
+          <div className="flex items-center gap-3 mb-5">
             <Shield className="w-5 h-5 text-green-600" />
             <h2 className="text-xl font-medium">Safety & Notifications</h2>
           </div>
@@ -199,7 +226,7 @@ const SettingsPanel = () => {
           className="glass-card rounded-xl p-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
         >
           <div className="flex items-center gap-3 mb-5">
             <Users className="w-5 h-5 text-purple-600" />
