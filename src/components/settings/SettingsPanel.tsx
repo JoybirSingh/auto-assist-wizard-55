@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
@@ -7,6 +6,7 @@ import {
   Settings, Bell, Clock, MessageSquare, Sliders, Shield, 
   CheckCircle2, Users, BarChart2, User
 } from 'lucide-react';
+import ApiConfigForm from './ApiConfigForm';
 
 type FrequencyOption = 'low' | 'medium' | 'high';
 type TimeOption = 'morning' | 'afternoon' | 'evening' | 'spread';
@@ -45,6 +45,14 @@ const SettingsPanel = () => {
       </div>
 
       <div className="space-y-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ApiConfigForm />
+        </motion.div>
+
         <motion.div 
           className="glass-card rounded-xl p-6"
           initial={{ opacity: 0, y: 20 }}

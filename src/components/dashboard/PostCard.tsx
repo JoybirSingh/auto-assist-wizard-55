@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
 import { cn } from '@/lib/utils';
 import { MessageCircle, ThumbsUp, ArrowRight, Check, Award } from 'lucide-react';
+import linkedinService from '@/services/linkedinService';
+import { useToast } from "@/components/ui/use-toast";
 
 interface Post {
   id: string;
@@ -26,18 +28,47 @@ interface PostCardProps {
 
 const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
   const { mode } = useMode();
+  const { toast } = useToast();
   const [isGeneratingComment, setIsGeneratingComment] = useState(false);
   const [commentGenerated, setCommentGenerated] = useState(false);
 
-  const handleGenerateComment = () => {
+  const handleGenerateComment = async () => {
     setIsGeneratingComment(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsGeneratingComment(false);
+    try {
+      const selectedTone = localStorage.getItem('selectedTone') || 'Professional';
+      
+      // Call API to generate comment
+      await linkedinService.generateComment(post.id, selectedTone);
+      
       setCommentGenerated(true);
       onGenerateComment(post.id);
-    }, 1500);
+      
+      // If in autonomous mode, automatically post the comment
+      if (mode === 'autonomous') {
+        toast({
+          title: "Comment posted",
+          description: "Your AI comment has been automatically posted",
+          duration: 3000,
+        });
+      } else {
+        toast({
+          title: "Comment generated",
+          description: "Your AI comment has been created successfully",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      console.error('Error generating comment:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate comment",
+        variant: "destructive",
+        duration: 3000,
+      });
+    } finally {
+      setIsGeneratingComment(false);
+    }
   };
 
   return (
