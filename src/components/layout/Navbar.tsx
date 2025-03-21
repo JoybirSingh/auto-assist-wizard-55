@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useMode } from '@/context/ModeContext';
-import { Linkedin, Settings, Info, Menu, X } from 'lucide-react';
+import { Linkedin, Settings, Info, Menu, X, FileEdit } from 'lucide-react';
 
 const Navbar = () => {
   const location = useLocation();
@@ -28,6 +28,7 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Dashboard', icon: null },
+    { path: '/posts', label: 'Posts', icon: <FileEdit className="w-4 h-4" /> },
     { path: '/settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
     { path: '/about', label: 'About', icon: <Info className="w-4 h-4" /> },
   ];

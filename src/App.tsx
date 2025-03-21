@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Settings from "./pages/Settings";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import Posts from "./pages/Posts";
 
 // Import framer-motion for animations
 import { MotionConfig } from "framer-motion";
@@ -29,6 +30,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/posts" element={<Posts />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
