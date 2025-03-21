@@ -5,13 +5,14 @@ import { useMode } from '@/context/ModeContext';
 import { cn } from '@/lib/utils';
 import { 
   Settings, Bell, Clock, MessageSquare, Sliders, Shield, 
-  CheckCircle2, Users, BarChart2, User, Pencil, Calendar
+  CheckCircle2, Users, BarChart2, User, Pencil, Calendar, FileEdit
 } from 'lucide-react';
 import ApiConfigForm from './ApiConfigForm';
 import WritingSamples from './WritingSamples';
 import AISettings from './AISettings';
 import PostComposer from './PostComposer';
 import ScheduledPosts from './ScheduledPosts';
+import PostAnalytics from './PostAnalytics';
 import linkedinService from '@/services/linkedinService';
 
 type FrequencyOption = 'low' | 'medium' | 'high';
@@ -24,7 +25,7 @@ const SettingsPanel = () => {
   const [tone, setTone] = useState<string>('professional');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [safetyThreshold, setSafetyThreshold] = useState(80);
-  const [activeTab, setActiveTab] = useState<'settings' | 'posts'>('settings');
+  const [activeTab, setActiveTab] = useState<'settings' | 'posts' | 'analytics'>('settings');
 
   useEffect(() => {
     const savedTone = localStorage.getItem('selectedTone');
@@ -84,8 +85,20 @@ const SettingsPanel = () => {
               : "hover:bg-background/40 text-muted-foreground"
           )}
         >
-          <Calendar className="w-4 h-4" />
-          Posts
+          <FileEdit className="w-4 h-4" />
+          Create Posts
+        </button>
+        <button
+          onClick={() => setActiveTab('analytics')}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200",
+            activeTab === 'analytics' 
+              ? "bg-background shadow-sm" 
+              : "hover:bg-background/40 text-muted-foreground"
+          )}
+        >
+          <BarChart2 className="w-4 h-4" />
+          Analytics
         </button>
       </div>
 
@@ -315,6 +328,10 @@ const SettingsPanel = () => {
           <PostComposer />
           <ScheduledPosts />
         </div>
+      )}
+      
+      {activeTab === 'analytics' && (
+        <PostAnalytics />
       )}
 
       <div className="flex justify-end mt-8 mb-4">
