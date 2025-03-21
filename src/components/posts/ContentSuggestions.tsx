@@ -72,7 +72,7 @@ const contentIdeas = [
   {
     id: '3',
     title: 'The Future of Networking: LinkedIn Audio Events',
-    description: 'Discuss how LinkedIn's audio features are changing professional networking.',
+    description: 'Discuss how LinkedIn\'s audio features are changing professional networking.',
     relevance: 88,
     suggestedTiming: 'Wednesday, 2:00 PM',
     estimatedEngagement: 'Medium',
@@ -105,12 +105,12 @@ const contentTemplates = [
     id: '2',
     title: 'Industry Trend Analysis',
     structure: [
-      'Trend Identification: Name the trend you're seeing in your industry',
+      'Trend Identification: Name the trend you\'re seeing in your industry',
       'Evidence: Provide data points or examples that confirm the trend',
       'Impact Analysis: Discuss how this trend is changing your industry',
       'Future Prediction: Where do you see this trend going?',
       'Strategic Advice: How should professionals adapt?',
-      'Engagement: Ask for others' thoughts or experiences'
+      'Engagement: Ask for others\' thoughts or experiences'
     ],
     example: "I'm seeing a major shift in how companies approach talent acquisition. Here are 3 key trends changing the game...",
   },
