@@ -67,6 +67,36 @@
 
     --radius: 0.75rem;
   }
+  
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212.7 26.8% 83.9%;
+  }
 
   * {
     @apply border-border;
@@ -82,7 +112,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
     overflow-x: hidden;
   }
 
@@ -92,9 +122,14 @@
 }
 
 @layer components {
-  /* Glass card effect */
+  /* Glass card effect - light mode */
   .glass-card {
     @apply bg-white/40 backdrop-blur-lg border border-white/30 shadow-glass transition-all duration-300 hover:shadow-glass-hover;
+  }
+  
+  /* Glass card effect - dark mode */
+  .dark .glass-card {
+    @apply bg-gray-800/40 backdrop-blur-lg border border-gray-700/30 shadow-glass-dark transition-all duration-300 hover:shadow-glass-hover-dark;
   }
   
   /* Button with subtle hover effect */
@@ -114,6 +149,11 @@
   .card-shine:hover::after {
     @apply opacity-100 animate-pulse-soft;
   }
+
+  /* Dark mode card shine */
+  .dark .card-shine::after {
+    @apply bg-card-shine-dark;
+  }
 }
 
 .blur-load {
@@ -131,7 +171,7 @@
   transition: opacity 200ms ease-in-out;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - light mode */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -148,4 +188,13 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(220, 13%, 80%);
+}
+
+/* Custom scrollbar - dark mode */
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(220, 13%, 25%);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(220, 13%, 30%);
 }

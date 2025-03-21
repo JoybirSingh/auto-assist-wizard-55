@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
+import { useTheme } from '@/context/ThemeContext';
 import { cn } from '@/lib/utils';
-import { MessageCircle, ThumbsUp, ArrowRight, Check, Award, Sparkles } from 'lucide-react';
+import { MessageCircle, ThumbsUp, ArrowRight, Check, Award, Sparkles, Share2, Bookmark } from 'lucide-react';
 import linkedinService from '@/services/linkedinService';
 import { useToast } from "@/components/ui/use-toast";
 
@@ -28,10 +29,13 @@ interface PostCardProps {
 
 const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
   const { mode } = useMode();
+  const { theme } = useTheme();
   const { toast } = useToast();
   const [isGeneratingComment, setIsGeneratingComment] = useState(false);
   const [commentGenerated, setCommentGenerated] = useState(false);
   const [hasMimicryEnabled, setHasMimicryEnabled] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showActions, setShowActions] = useState(false);
 
   useEffect(() => {
     // Check if there are any writing samples for style mimicry
@@ -78,23 +82,46 @@ const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
     }
   };
 
+  const toggleBookmark = () => {
+    setIsBookmarked(!isBookmarked);
+    toast({
+      title: isBookmarked ? "Post removed from bookmarks" : "Post bookmarked",
+      description: isBookmarked ? "You can add it back anytime" : "You can find it in your saved items",
+      duration: 2000,
+    });
+  };
+
   return (
     <motion.div 
-      className="glass-card rounded-xl overflow-hidden card-shine"
+      className={cn(
+        "rounded-xl overflow-hidden transition-all duration-300",
+        theme === 'dark' 
+          ? "bg-gray-800/60 shadow-lg hover:shadow-indigo-500/10 border border-gray-700/50" 
+          : "glass-card card-shine"
+      )}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
+      onHoverStart={() => setShowActions(true)}
+      onHoverEnd={() => setShowActions(false)}
     >
       <div className="p-6">
         <div className="flex items-center gap-4 mb-4">
-          <img 
+          <motion.img 
             src={post.author.avatar} 
             alt={post.author.name} 
-            className="w-12 h-12 rounded-full object-cover border-2 border-white"
+            className={cn(
+              "w-12 h-12 rounded-full object-cover",
+              theme === 'dark' ? "border-2 border-gray-700" : "border-2 border-white"
+            )}
+            whileHover={{ scale: 1.05 }}
           />
           <div>
             <h3 className="font-semibold">{post.author.name}</h3>
-            <p className="text-sm text-muted-foreground">{post.author.title}</p>
+            <p className={cn(
+              "text-sm",
+              theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
+            )}>{post.author.title}</p>
           </div>
         </div>
         
@@ -102,14 +129,34 @@ const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
         
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1">
-              <ThumbsUp className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">{post.likes}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <MessageCircle className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">{post.comments}</span>
-            </div>
+            <motion.div 
+              className="flex items-center gap-1 cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ThumbsUp className={cn(
+                "w-4 h-4",
+                theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
+              )} />
+              <span className={cn(
+                "text-sm",
+                theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
+              )}>{post.likes}</span>
+            </motion.div>
+            <motion.div 
+              className="flex items-center gap-1 cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <MessageCircle className={cn(
+                "w-4 h-4",
+                theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
+              )} />
+              <span className={cn(
+                "text-sm",
+                theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
+              )}>{post.comments}</span>
+            </motion.div>
           </div>
           
           <div className="flex items-center gap-1">
@@ -119,38 +166,89 @@ const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
             </span>
           </div>
         </div>
+
+        <motion.div 
+          className={cn(
+            "mt-4 flex items-center justify-between opacity-0",
+            showActions && "opacity-100"
+          )}
+          animate={{ opacity: showActions ? 1 : 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="flex gap-3">
+            <motion.button
+              className={cn(
+                "p-1.5 rounded-full",
+                theme === 'dark' ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-100 hover:bg-gray-200"
+              )}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Share2 className="w-4 h-4" />
+            </motion.button>
+            <motion.button
+              className={cn(
+                "p-1.5 rounded-full",
+                isBookmarked 
+                  ? "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400" 
+                  : theme === 'dark' ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-100 hover:bg-gray-200"
+              )}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleBookmark}
+            >
+              <Bookmark className="w-4 h-4" />
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
       
-      <div className="border-t border-gray-100 px-6 py-4 bg-secondary/50">
+      <div className={cn(
+        "border-t px-6 py-4",
+        theme === 'dark' ? "border-gray-700 bg-gray-800/80" : "border-gray-100 bg-secondary/50"
+      )}>
         {commentGenerated ? (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-full bg-green-100">
-                <Check className="w-4 h-4 text-green-600" />
+              <div className={cn(
+                "p-1.5 rounded-full",
+                theme === 'dark' ? "bg-green-900/40 text-green-400" : "bg-green-100 text-green-600"
+              )}>
+                <Check className="w-4 h-4" />
               </div>
               <span className="text-sm font-medium">
                 {mode === 'assisted' ? 'Comment generated' : 'Comment posted automatically'}
               </span>
             </div>
-            <button 
-              className="text-sm text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1"
+            <motion.button 
+              className={cn(
+                "text-sm flex items-center gap-1 transition-colors",
+                theme === 'dark' ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-700"
+              )}
               onClick={() => setCommentGenerated(false)}
+              whileHover={{ x: 3 }}
             >
               {mode === 'assisted' ? 'View' : 'View details'}
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </motion.button>
           </div>
         ) : (
-          <button
+          <motion.button
             className={cn(
               "w-full py-2 rounded-lg flex items-center justify-center gap-2 transition-all duration-300",
               isGeneratingComment ? "opacity-80 cursor-not-allowed" : "hover:bg-opacity-90",
-              mode === 'assisted' 
-                ? "bg-assisted-DEFAULT text-white" 
-                : "bg-autonomous-DEFAULT text-white"
+              theme === 'dark' 
+                ? mode === 'assisted' 
+                  ? "bg-assisted-DEFAULT/90 text-white hover:bg-assisted-DEFAULT" 
+                  : "bg-autonomous-DEFAULT/90 text-white hover:bg-autonomous-DEFAULT" 
+                : mode === 'assisted' 
+                  ? "bg-assisted-DEFAULT text-white" 
+                  : "bg-autonomous-DEFAULT text-white"
             )}
             onClick={handleGenerateComment}
             disabled={isGeneratingComment}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             {isGeneratingComment ? (
               <>
@@ -167,7 +265,7 @@ const PostCard = ({ post, index, onGenerateComment }: PostCardProps) => {
                 </span>
               </>
             )}
-          </button>
+          </motion.button>
         )}
       </div>
     </motion.div>

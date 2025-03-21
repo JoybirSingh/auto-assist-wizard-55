@@ -151,13 +151,17 @@ export default {
       boxShadow: {
         'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
         'glass-hover': '0 8px 32px rgba(0, 0, 0, 0.15)',
+        'glass-dark': '0 4px 30px rgba(0, 0, 0, 0.3)',
+        'glass-hover-dark': '0 8px 32px rgba(0, 0, 0, 0.4)',
         'soft': '0 4px 28px rgba(0, 0, 0, 0.07)',
         'button': '0 1px 2px rgba(0, 0, 0, 0.05)'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'glass': 'linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2))',
-        'card-shine': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)'
+        'glass-dark': 'linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(30, 41, 59, 0.2))',
+        'card-shine': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)',
+        'card-shine-dark': 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)'
       }
 		}
 	},

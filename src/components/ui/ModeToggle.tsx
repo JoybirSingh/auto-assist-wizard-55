@@ -1,20 +1,27 @@
 
 import React from 'react';
 import { useMode } from '@/context/ModeContext';
+import { useTheme } from '@/context/ThemeContext';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Bot, UserCircle } from 'lucide-react';
 
 const ModeToggle = () => {
   const { mode, setMode } = useMode();
+  const { theme } = useTheme();
 
   return (
     <div className="flex flex-col items-center">
-      <div className="p-1 rounded-full bg-secondary flex items-center relative">
+      <div className={cn(
+        "p-1 rounded-full flex items-center relative",
+        theme === 'dark' ? "bg-gray-800" : "bg-secondary"
+      )}>
         <button
           className={cn(
             "relative z-10 flex items-center justify-center gap-2 px-4 py-2 rounded-full transition-colors duration-300",
-            mode === 'assisted' ? 'text-foreground' : 'text-muted-foreground'
+            mode === 'assisted' 
+              ? theme === 'dark' ? "text-white" : "text-foreground" 
+              : theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
           )}
           onClick={() => setMode('assisted')}
           aria-label="Switch to assisted mode"
@@ -26,7 +33,9 @@ const ModeToggle = () => {
         <button
           className={cn(
             "relative z-10 flex items-center justify-center gap-2 px-4 py-2 rounded-full transition-colors duration-300",
-            mode === 'autonomous' ? 'text-foreground' : 'text-muted-foreground'
+            mode === 'autonomous' 
+              ? theme === 'dark' ? "text-white" : "text-foreground" 
+              : theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
           )}
           onClick={() => setMode('autonomous')}
           aria-label="Switch to autonomous mode"
@@ -37,8 +46,10 @@ const ModeToggle = () => {
         
         <motion.div
           className={cn(
-            "absolute inset-y-1 rounded-full transition-colors duration-300",
-            mode === 'assisted' ? 'bg-assisted-muted' : 'bg-autonomous-muted'
+            "absolute inset-y-1 rounded-full",
+            mode === 'assisted' 
+              ? theme === 'dark' ? "bg-assisted-DEFAULT/30" : "bg-assisted-muted" 
+              : theme === 'dark' ? "bg-autonomous-DEFAULT/30" : "bg-autonomous-muted"
           )}
           initial={false}
           animate={{
@@ -49,7 +60,10 @@ const ModeToggle = () => {
         />
       </div>
       
-      <p className="mt-3 text-xs text-muted-foreground max-w-xs text-center">
+      <p className={cn(
+        "mt-3 text-xs max-w-xs text-center",
+        theme === 'dark' ? "text-gray-400" : "text-muted-foreground"
+      )}>
         {mode === 'assisted' 
           ? "Assisted mode sends you notifications with suggested comments for manual posting."
           : "Autonomous mode automatically comments on your behalf. Use with caution."}
