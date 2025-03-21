@@ -284,8 +284,8 @@ export class LinkedInService {
         commentText += ' (Personalized based on your comment history)';
       }
       
-      // Return a mock generated comment
-      const comment = {
+      // Return a mock generated comment with properly typed status
+      const comment: GeneratedComment = {
         id: `comment-${Date.now()}`,
         postId,
         text: commentText,
