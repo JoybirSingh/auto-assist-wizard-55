@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Gauge, TrendingUp, ArrowUpRight, Clock, Eye } from 'lucide-react';
@@ -6,8 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line } from 'recharts';
 import { useMode } from '@/context/ModeContext';
+import { cn } from '@/lib/utils';
 
-// Sample data for demonstration
 const weeklyPerformance = [
   { day: 'Mon', impressions: 245, engagements: 42, clicks: 18 },
   { day: 'Tue', impressions: 380, engagements: 65, clicks: 27 },

@@ -9,7 +9,8 @@ import {
   BarChart,
   Clock,
   Globe,
-  UserPlus
+  UserPlus,
+  ArrowUpRight
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -139,15 +140,15 @@ const AudienceInsights = () => {
                       <span className="font-medium">{job.percentage}%</span>
                     </div>
                     <Progress value={job.percentage} 
-                      className="h-2" 
-                      indicatorClassName={cn(
-                        index === 0 ? "bg-blue-500" :
-                        index === 1 ? "bg-green-500" :
-                        index === 2 ? "bg-orange-500" :
-                        index === 3 ? "bg-purple-500" :
-                        index === 4 ? "bg-pink-500" :
-                        "bg-gray-500"
-                      )} 
+                      className={cn(
+                        "h-2",
+                        index === 0 ? "bg-blue-100" :
+                        index === 1 ? "bg-green-100" :
+                        index === 2 ? "bg-orange-100" :
+                        index === 3 ? "bg-purple-100" :
+                        index === 4 ? "bg-pink-100" :
+                        "bg-gray-100"
+                      )}
                     />
                   </div>
                 ))}
@@ -203,15 +204,15 @@ const AudienceInsights = () => {
                       <span className="font-medium">{location.value}%</span>
                     </div>
                     <Progress value={location.value} 
-                      className="h-2" 
-                      indicatorClassName={cn(
-                        index === 0 ? "bg-blue-500" :
-                        index === 1 ? "bg-green-500" :
-                        index === 2 ? "bg-orange-500" :
-                        index === 3 ? "bg-purple-500" :
-                        index === 4 ? "bg-pink-500" :
-                        "bg-gray-500"
-                      )} 
+                      className={cn(
+                        "h-2",
+                        index === 0 ? "bg-blue-100" :
+                        index === 1 ? "bg-green-100" :
+                        index === 2 ? "bg-orange-100" :
+                        index === 3 ? "bg-purple-100" :
+                        index === 4 ? "bg-pink-100" :
+                        "bg-gray-100"
+                      )}
                     />
                   </div>
                 ))}
@@ -247,12 +248,12 @@ const AudienceInsights = () => {
                       <span className="font-medium">{timeSlot.percentage}%</span>
                     </div>
                     <Progress value={timeSlot.percentage} 
-                      className="h-2" 
-                      indicatorClassName={cn(
-                        timeSlot.percentage > 25 ? "bg-green-500" :
-                        timeSlot.percentage > 15 ? "bg-blue-500" :
-                        "bg-gray-500"
-                      )} 
+                      className={cn(
+                        "h-2",
+                        timeSlot.percentage > 25 ? "bg-green-100" :
+                        timeSlot.percentage > 15 ? "bg-blue-100" :
+                        "bg-gray-100"
+                      )}
                     />
                   </div>
                 ))}
