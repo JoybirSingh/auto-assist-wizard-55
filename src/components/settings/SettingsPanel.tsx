@@ -10,6 +10,7 @@ import {
 import ApiConfigForm from './ApiConfigForm';
 import WritingSamples from './WritingSamples';
 import AISettings from './AISettings';
+import CommentLimitSettings from './CommentLimitSettings';
 import linkedinService from '@/services/linkedinService';
 
 type FrequencyOption = 'low' | 'medium' | 'high';
@@ -69,6 +70,8 @@ const SettingsPanel = () => {
         </motion.div>
 
         <AISettings />
+        
+        {mode === 'autonomous' && <CommentLimitSettings />}
 
         <motion.div 
           className="glass-card rounded-xl p-6"
