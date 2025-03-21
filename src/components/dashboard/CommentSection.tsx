@@ -3,24 +3,42 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
 import { cn } from '@/lib/utils';
-import { MessageCircle, RefreshCw, Send, ThumbsUp, Clock } from 'lucide-react';
-import linkedinService, { GeneratedComment } from '@/services/linkedinService';
-import { useToast } from "@/components/ui/use-toast";
+import { MessageCircle, RefreshCw, Send, ThumbsUp, Clock, Sparkles, Lightbulb, Brain } from 'lucide-react';
+import linkedinService, { GeneratedComment, AISettings } from '@/services/linkedinService';
+import { useToast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const CommentSection = () => {
   const { mode } = useMode();
   const { toast } = useToast();
   const [comments, setComments] = useState<GeneratedComment[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedTone, setSelectedTone] = useState(() => {
-    return localStorage.getItem('selectedTone') || 'Professional';
+  const [aiSettings, setAiSettings] = useState<AISettings>({
+    enableLearning: false,
+    preferredTone: 'Professional',
+    preferredLength: 'medium'
   });
   
   const tones = ['Professional', 'Casual', 'Enthusiastic', 'Insightful', 'Supportive'];
+  const commentLengths = [
+    { value: 'short', label: 'Short' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'long', label: 'Long' }
+  ];
 
   useEffect(() => {
     // In a real app, we would fetch comments from the API
     setLoading(true);
+    
+    // Load AI settings
+    const settings = linkedinService.getAISettings();
+    setAiSettings(settings);
     
     // Simulate API delay
     const timer = setTimeout(() => {
@@ -30,6 +48,7 @@ const CommentSection = () => {
           postId: '1',
           text: "This is an excellent point about leadership in the digital age. I've seen firsthand how these principles can transform team dynamics and drive innovation.",
           tone: 'Professional',
+          length: 'medium',
           status: mode === 'assisted' ? 'pending' : 'posted',
           timestamp: 'Just now'
         },
@@ -38,6 +57,7 @@ const CommentSection = () => {
           postId: '2',
           text: "Great insights on market trends! The data you've shared aligns perfectly with what we're seeing in our industry. Would love to discuss this further.",
           tone: 'Engaging',
+          length: 'medium',
           status: mode === 'assisted' ? 'pending' : 'posted',
           timestamp: '2 hours ago'
         },
@@ -46,6 +66,7 @@ const CommentSection = () => {
           postId: '3',
           text: "Your perspective on sustainable business practices is spot-on. Companies that prioritize sustainability aren't just doing good—they're setting themselves up for long-term success.",
           tone: 'Supportive',
+          length: 'medium',
           status: mode === 'assisted' ? 'scheduled' : 'scheduled',
           timestamp: 'Tomorrow at 9:00 AM'
         },
@@ -56,13 +77,40 @@ const CommentSection = () => {
     return () => clearTimeout(timer);
   }, [mode]);
 
-  const storeTonePreference = (tone: string) => {
-    localStorage.setItem('selectedTone', tone);
-    setSelectedTone(tone);
+  const handleToneChange = (tone: string) => {
+    const updatedSettings = { ...aiSettings, preferredTone: tone };
+    setAiSettings(updatedSettings);
+    linkedinService.saveAISettings(updatedSettings);
     
     toast({
       title: "Tone updated",
       description: `Your comment tone has been set to ${tone}`,
+      duration: 2000,
+    });
+  };
+  
+  const handleLengthChange = (length: 'short' | 'medium' | 'long') => {
+    const updatedSettings = { ...aiSettings, preferredLength: length };
+    setAiSettings(updatedSettings);
+    linkedinService.saveAISettings(updatedSettings);
+    
+    toast({
+      title: "Comment length updated",
+      description: `Your comment length has been set to ${length}`,
+      duration: 2000,
+    });
+  };
+  
+  const toggleLearningMode = () => {
+    const updatedSettings = { ...aiSettings, enableLearning: !aiSettings.enableLearning };
+    setAiSettings(updatedSettings);
+    linkedinService.saveAISettings(updatedSettings);
+    
+    toast({
+      title: updatedSettings.enableLearning ? "Learning mode enabled" : "Learning mode disabled",
+      description: updatedSettings.enableLearning 
+        ? "AI will now learn from your comments to better match your style" 
+        : "AI will no longer learn from your comments",
       duration: 2000,
     });
   };
@@ -176,6 +224,10 @@ const CommentSection = () => {
     );
   }
 
+  const hasSamples = linkedinService.getWritingSamples().length > 0;
+  const hasHistory = linkedinService.getCommentHistory().length > 0;
+  const hasPersonalization = (hasSamples || (hasHistory && aiSettings.enableLearning));
+
   return (
     <div className="mb-12">
       <div className="flex flex-col space-y-2 mb-6">
@@ -188,26 +240,88 @@ const CommentSection = () => {
       </div>
 
       <div className="glass-card rounded-xl overflow-hidden mb-8">
-        <div className="p-6 border-b border-gray-100">
-          <h3 className="text-lg font-semibold mb-4">Comment Preferences</h3>
-          <div className="flex flex-wrap gap-2">
-            {tones.map((tone) => (
+        <div className="p-6 border-b border-gray-100 dark:border-gray-800">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold flex items-center gap-2">
+              <Brain className="w-5 h-5 text-purple-500" />
+              AI Comment Preferences
+            </h3>
+            
+            <div className="flex items-center gap-2">
+              <span className="text-sm">Learning mode:</span>
               <button
-                key={tone}
+                onClick={toggleLearningMode}
                 className={cn(
-                  "px-4 py-2 rounded-full text-sm transition-all duration-200",
-                  selectedTone === tone 
-                    ? mode === 'assisted' 
-                      ? "bg-assisted-DEFAULT text-white"
-                      : "bg-autonomous-DEFAULT text-white"
-                    : "bg-secondary hover:bg-secondary/80"
+                  "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
+                  aiSettings.enableLearning 
+                    ? "bg-purple-600" 
+                    : "bg-slate-200 dark:bg-slate-700"
                 )}
-                onClick={() => storeTonePreference(tone)}
               >
-                {tone}
+                <span
+                  className={cn(
+                    "inline-block h-4 w-4 transform rounded-full bg-white transition-transform",
+                    aiSettings.enableLearning ? "translate-x-6" : "translate-x-1"
+                  )}
+                />
               </button>
-            ))}
+            </div>
           </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="text-sm font-medium mb-2 block">Comment Tone</label>
+              <div className="flex flex-wrap gap-2">
+                {tones.map((tone) => (
+                  <button
+                    key={tone}
+                    className={cn(
+                      "px-4 py-2 rounded-full text-sm transition-all duration-200",
+                      aiSettings.preferredTone === tone 
+                        ? mode === 'assisted' 
+                          ? "bg-assisted-DEFAULT text-white"
+                          : "bg-autonomous-DEFAULT text-white"
+                        : "bg-secondary hover:bg-secondary/80"
+                    )}
+                    onClick={() => handleToneChange(tone)}
+                  >
+                    {tone}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+              <label className="text-sm font-medium mb-2 block">Comment Length</label>
+              <Select 
+                value={aiSettings.preferredLength} 
+                onValueChange={(value: 'short' | 'medium' | 'long') => handleLengthChange(value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select comment length" />
+                </SelectTrigger>
+                <SelectContent>
+                  {commentLengths.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          {hasPersonalization && (
+            <div className="mt-4 flex items-center gap-2 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-100 dark:border-purple-800 text-sm">
+              <Sparkles className="w-4 h-4 text-purple-500" />
+              <p>
+                AI comments using personalization from: 
+                {hasSamples && <span className="font-medium"> Writing samples</span>}
+                {hasSamples && hasHistory && aiSettings.enableLearning && <span> and</span>}
+                {hasHistory && aiSettings.enableLearning && <span className="font-medium"> Comment history</span>}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -232,6 +346,9 @@ const CommentSection = () => {
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-secondary">
                     {comment.tone}
+                  </span>
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-secondary">
+                    {comment.length || 'Medium'}
                   </span>
                   <span className="text-xs text-muted-foreground flex items-center gap-1">
                     <Clock className="w-3 h-3" />
@@ -281,13 +398,13 @@ const CommentSection = () => {
                 )}
                 
                 {comment.status === 'posted' && (
-                  <span className="ml-auto text-xs px-2.5 py-1 rounded-full bg-green-100 text-green-700">
+                  <span className="ml-auto text-xs px-2.5 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
                     Posted
                   </span>
                 )}
                 
                 {comment.status === 'scheduled' && (
-                  <span className="ml-auto text-xs px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">
+                  <span className="ml-auto text-xs px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
                     Scheduled
                   </span>
                 )}
