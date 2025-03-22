@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -179,7 +178,7 @@ const PremiumFeatures = () => {
       title: "Personalized LinkedIn Strategy",
       description: "Get custom strategic advice tailored to your specific career goals and industry",
       icon: <Lightbulb className="w-5 h-5" />,
-      tier: 'basic',
+      tier: 'basic' as const,
       popular: false,
       comingSoon: false
     },
@@ -187,7 +186,7 @@ const PremiumFeatures = () => {
       title: "Profile Optimization Assistant",
       description: "AI-powered recommendations to enhance your LinkedIn profile visibility and impact",
       icon: <BarChart3 className="w-5 h-5" />,
-      tier: 'basic',
+      tier: 'basic' as const,
       popular: true,
       comingSoon: false
     },
@@ -195,7 +194,7 @@ const PremiumFeatures = () => {
       title: "Engagement Performance Metrics",
       description: "Track the effectiveness of your LinkedIn activities with basic analytics",
       icon: <LineChart className="w-5 h-5" />,
-      tier: 'basic',
+      tier: 'basic' as const,
       popular: false,
       comingSoon: false
     },
@@ -203,7 +202,7 @@ const PremiumFeatures = () => {
       title: "Content Idea Generation",
       description: "Get AI-assisted inspiration for your LinkedIn posts and articles",
       icon: <Lightbulb className="w-5 h-5" />,
-      tier: 'basic',
+      tier: 'basic' as const,
       popular: false,
       comingSoon: false
     },
@@ -214,7 +213,7 @@ const PremiumFeatures = () => {
       title: "AI Career Trajectory Forecasting",
       description: "Get AI-powered insights on your potential career path based on your engagement patterns",
       icon: <TrendingUp className="w-5 h-5" />,
-      tier: 'premium',
+      tier: 'premium' as const,
       popular: true,
       comingSoon: false
     },
@@ -222,7 +221,7 @@ const PremiumFeatures = () => {
       title: "Digital Twin Technology",
       description: "Train an advanced AI model that precisely mimics your professional voice and style",
       icon: <BrainCircuit className="w-5 h-5" />,
-      tier: 'premium',
+      tier: 'premium' as const,
       popular: true,
       comingSoon: false
     },
@@ -230,7 +229,7 @@ const PremiumFeatures = () => {
       title: "Relationship Intelligence System",
       description: "Map your professional network with relationship strength scoring and reconnection strategies",
       icon: <Network className="w-5 h-5" />,
-      tier: 'premium',
+      tier: 'premium' as const,
       popular: false,
       comingSoon: false
     },
@@ -238,7 +237,7 @@ const PremiumFeatures = () => {
       title: "Credibility & Reputation Metrics",
       description: "Track your industry perception and thought leadership score compared to peers",
       icon: <BadgeAlert className="w-5 h-5" />,
-      tier: 'premium',
+      tier: 'premium' as const,
       popular: false,
       comingSoon: false
     },
@@ -249,7 +248,7 @@ const PremiumFeatures = () => {
       title: "Industry Mastermind Access",
       description: "Join AI-facilitated discussion groups with professionals in your field",
       icon: <Users className="w-5 h-5" />,
-      tier: 'enterprise',
+      tier: 'enterprise' as const,
       popular: true,
       comingSoon: true
     },
@@ -257,7 +256,7 @@ const PremiumFeatures = () => {
       title: "Opportunity Cost Calculator",
       description: "See the financial impact of your LinkedIn engagement (or lack thereof)",
       icon: <LineChart className="w-5 h-5" />,
-      tier: 'enterprise',
+      tier: 'enterprise' as const,
       popular: false,
       comingSoon: true
     },
@@ -265,7 +264,7 @@ const PremiumFeatures = () => {
       title: "Network Opportunity Detection",
       description: "Identify hidden connection opportunities and potential clients before competitors",
       icon: <Target className="w-5 h-5" />,
-      tier: 'enterprise',
+      tier: 'enterprise' as const,
       popular: false,
       comingSoon: true
     },
@@ -273,7 +272,7 @@ const PremiumFeatures = () => {
       title: "Multi-User Team Collaboration",
       description: "Enable your entire team to collaborate on LinkedIn strategy with role-based access",
       icon: <Users className="w-5 h-5" />,
-      tier: 'enterprise',
+      tier: 'enterprise' as const,
       popular: true,
       comingSoon: false
     },
