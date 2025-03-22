@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
@@ -11,6 +10,7 @@ import ApiConfigForm from './ApiConfigForm';
 import WritingSamples from './WritingSamples';
 import AISettings from './AISettings';
 import CommentLimitSettings from './CommentLimitSettings';
+import TopicCommentSettings from './TopicCommentSettings';
 import linkedinService from '@/services/linkedinService';
 
 type FrequencyOption = 'low' | 'medium' | 'high';
@@ -71,7 +71,12 @@ const SettingsPanel = () => {
 
         <AISettings />
         
-        {mode === 'autonomous' && <CommentLimitSettings />}
+        {mode === 'autonomous' && (
+          <>
+            <CommentLimitSettings />
+            <TopicCommentSettings />
+          </>
+        )}
 
         <motion.div 
           className="glass-card rounded-xl p-6"
