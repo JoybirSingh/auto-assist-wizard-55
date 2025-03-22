@@ -11,7 +11,9 @@ import {
   MessageSquare, 
   Sliders,
   BookOpen,
-  Info
+  Info,
+  Star,
+  Lock
 } from 'lucide-react';
 import {
   Tooltip,
@@ -55,6 +57,14 @@ const AISettings = () => {
       title: "AI settings updated",
       description: "Your AI preferences have been saved",
       duration: 2000,
+    });
+  };
+
+  const handleUpgradeClick = () => {
+    toast({
+      title: "Premium Feature",
+      description: "Advanced AI customization is available in the premium plan",
+      duration: 3000,
     });
   };
 
@@ -180,6 +190,21 @@ const AISettings = () => {
               </label>
             ))}
           </RadioGroup>
+          
+          <div className="flex justify-between items-center">
+            <button 
+              onClick={handleUpgradeClick}
+              className="text-sm text-purple-600 dark:text-purple-400 flex items-center gap-1.5 hover:underline"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              Unlock 10+ custom tones
+            </button>
+            
+            <div className="flex items-center gap-1.5">
+              <Star className="w-3.5 h-3.5 text-amber-500" />
+              <span className="text-xs font-medium text-amber-600 dark:text-amber-400">Premium</span>
+            </div>
+          </div>
         </div>
         
         <div className="space-y-4">
@@ -224,6 +249,22 @@ const AISettings = () => {
               </label>
             ))}
           </RadioGroup>
+        </div>
+        
+        <div 
+          className="p-4 rounded-lg border border-dashed border-purple-200 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-900/10 cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+          onClick={handleUpgradeClick}
+        >
+          <div className="flex items-center gap-2 mb-1">
+            <Sparkles className="w-4 h-4 text-purple-500" />
+            <h4 className="text-sm font-medium text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
+              Digital Twin Technology
+              <Lock className="w-3.5 h-3.5 text-purple-400" />
+            </h4>
+          </div>
+          <p className="text-xs text-purple-600/70 dark:text-purple-300/70 ml-6">
+            Upgrade to create an advanced AI model that's indistinguishable from your own writing
+          </p>
         </div>
       </div>
     </motion.div>

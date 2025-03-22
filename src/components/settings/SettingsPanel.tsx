@@ -1,16 +1,18 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
 import { cn } from '@/lib/utils';
 import { 
   Settings, Bell, Clock, MessageSquare, Sliders, Shield, 
-  CheckCircle2, Users, Pencil
+  CheckCircle2, Users, Pencil, Crown
 } from 'lucide-react';
 import ApiConfigForm from './ApiConfigForm';
 import WritingSamples from './WritingSamples';
 import AISettings from './AISettings';
 import CommentLimitSettings from './CommentLimitSettings';
 import TopicCommentSettings from './TopicCommentSettings';
+import PremiumFeatures from './PremiumFeatures';
 import linkedinService from '@/services/linkedinService';
 
 type FrequencyOption = 'low' | 'medium' | 'high';
@@ -68,6 +70,8 @@ const SettingsPanel = () => {
         >
           <ApiConfigForm />
         </motion.div>
+
+        <PremiumFeatures />
 
         <AISettings />
         
