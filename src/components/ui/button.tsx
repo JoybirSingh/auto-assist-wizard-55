@@ -22,6 +22,11 @@ const buttonVariants = cva(
         success: "bg-green-600 text-white hover:bg-green-700 shadow-sm",
         upgrade: "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 shadow-md",
         cta: "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 shadow-md font-semibold",
+        twitter: "bg-[#1DA1F2] text-white hover:bg-[#1A91DA] shadow-sm",
+        linkedin: "bg-[#0A66C2] text-white hover:bg-[#0959AB] shadow-sm",
+        lead: "bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 shadow-md",
+        opportunity: "bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-600 hover:to-blue-700 shadow-md",
+        analytics: "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:from-violet-600 hover:to-purple-700 shadow-md",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -33,12 +38,17 @@ const buttonVariants = cva(
       pulse: {
         true: "animate-pulse",
         false: "",
+      },
+      shimmer: {
+        true: "relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.5s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent",
+        false: "",
       }
     },
     defaultVariants: {
       variant: "default",
       size: "default",
       pulse: false,
+      shimmer: false,
     },
   }
 )
@@ -48,14 +58,15 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   pulse?: boolean
+  shimmer?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, pulse, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, pulse, shimmer, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, pulse, className }))}
+        className={cn(buttonVariants({ variant, size, pulse, shimmer, className }))}
         ref={ref}
         {...props}
       />
