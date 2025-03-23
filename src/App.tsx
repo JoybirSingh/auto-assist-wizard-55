@@ -17,6 +17,9 @@ import ContentCalendar from "./pages/ContentCalendar";
 import CompanyDashboard from "./pages/CompanyDashboard";
 import ProjectOpportunities from "./pages/ProjectOpportunities";
 import CustomerEngagement from "./pages/CustomerEngagement";
+import ContentOptimization from "./pages/ContentOptimization";
+import ConnectionAutomation from "./pages/ConnectionAutomation";
+import FollowUpCenter from "./pages/FollowUpCenter";
 
 // Import framer-motion for animations
 import { MotionConfig } from "framer-motion";
@@ -43,6 +46,10 @@ const App = () => (
                 <Route path="/company-dashboard" element={<CompanyDashboard />} />
                 <Route path="/opportunities" element={<ProjectOpportunities />} />
                 <Route path="/customer-engagement" element={<CustomerEngagement />} />
+                {/* New Routes */}
+                <Route path="/content-optimization" element={<ContentOptimization />} />
+                <Route path="/connection-automation" element={<ConnectionAutomation />} />
+                <Route path="/follow-up-center" element={<FollowUpCenter />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
