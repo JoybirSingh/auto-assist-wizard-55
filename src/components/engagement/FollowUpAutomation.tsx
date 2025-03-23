@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -643,7 +642,7 @@ const FollowUpAutomation = () => {
                           rows={4}
                         />
                         <div className="text-xs text-muted-foreground">
-                          Use variables like {{'{{'}}first_name{{'}}'}} to personalize your message
+                          Use variables like {"{{"} first_name {"}}"}  to personalize your message
                         </div>
                       </div>
                     )}
@@ -668,7 +667,7 @@ const FollowUpAutomation = () => {
               <div className="flex flex-wrap gap-2">
                 {personalizationVariables.map(variable => (
                   <Badge key={variable.name} variant="secondary" className="cursor-pointer">
-                    {{'{{'}}variable.name{{'}}'}}
+                    {"{{"} {variable.name} {"}}"}
                   </Badge>
                 ))}
               </div>

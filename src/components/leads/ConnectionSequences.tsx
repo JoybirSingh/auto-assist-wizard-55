@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   Card, 
   CardContent, 
@@ -587,7 +588,7 @@ const ConnectionSequences = () => {
                           rows={4}
                         />
                         <div className="text-xs text-muted-foreground">
-                          Use variables like {{'{{'}}first_name{{'}}'}} to personalize your message
+                          Use variables like {"{{"} first_name {"}}"}  to personalize your message
                         </div>
                       </div>
                     )}
@@ -612,7 +613,7 @@ const ConnectionSequences = () => {
               <div className="flex flex-wrap gap-2">
                 {personalizationVariables.map(variable => (
                   <Badge key={variable.name} variant="secondary" className="cursor-pointer">
-                    {{'{{'}}variable.name{{'}}'}}
+                    {"{{"} {variable.name} {"}}"}
                   </Badge>
                 ))}
               </div>
