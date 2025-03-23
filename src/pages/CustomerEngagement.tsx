@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
@@ -73,7 +72,6 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 
-// Sample data
 const customerData = [
   {
     id: '1',
@@ -196,7 +194,7 @@ const messageSuggestions = [
   {
     id: '1',
     title: 'Follow-up on Demo',
-    content: 'Hi [Name], I wanted to follow up on our recent demo and see if you had any additional questions. I'm available to discuss further details or provide more information about specific features you're interested in.',
+    content: 'Hi [Name], I wanted to follow up on our recent demo and see if you had any additional questions. I\'m available to discuss further details or provide more information about specific features you\'re interested in.',
     type: 'follow-up'
   },
   {
@@ -214,7 +212,7 @@ const messageSuggestions = [
   {
     id: '4',
     title: 'Meeting Request',
-    content: 'Hi [Name], I'd like to schedule some time to discuss how we can address the [specific challenge] you mentioned during our last conversation. Would you have 30 minutes available next week? I have some specific ideas I'd like to share.',
+    content: 'Hi [Name], I\'d like to schedule some time to discuss how we can address the [specific challenge] you mentioned during our last conversation. Would you have 30 minutes available next week? I have some specific ideas I\'d like to share.',
     type: 'meeting'
   },
 ];
@@ -236,7 +234,6 @@ const CustomerEngagement = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
   const [messageText, setMessageText] = useState('');
   
-  // Filter customers based on search and tab
   const filteredCustomers = customerData.filter(customer => {
     const matchesSearch = searchQuery === '' || 
       customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -629,7 +626,8 @@ const CustomerEngagement = () => {
                             <div>
                               <div className="flex justify-between mb-1">
                                 <div className="text-sm">Sentiment Analysis</div>
-                                <div className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1"
+                                <div 
+                                  className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1"
                                   style={{
                                     color: SENTIMENT_COLORS[selectedCustomerData.sentiment as keyof typeof SENTIMENT_COLORS],
                                     backgroundColor: `${SENTIMENT_COLORS[selectedCustomerData.sentiment as keyof typeof SENTIMENT_COLORS]}10`
@@ -676,7 +674,7 @@ const CustomerEngagement = () => {
                       </div>
                       
                       <div>
-                        <h3 className="text-sm font-medium mb-2">Notes</h3>
+                        <h3 className="text-sm font-medium mb-3">Notes</h3>
                         <div className="relative">
                           <Textarea 
                             value={selectedCustomerData.notes} 
