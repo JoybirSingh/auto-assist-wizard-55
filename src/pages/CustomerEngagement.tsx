@@ -43,7 +43,9 @@ import {
   Tag,
   Linkedin,
   Twitter,
-  Building
+  Building,
+  Plus,
+  ArrowDown
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -487,10 +489,12 @@ const CustomerEngagement = () => {
                                   )}
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <div className={cn(
-                                    "flex items-center gap-1 text-xs px-2 py-0.5 rounded-full",
-                                    `text-${SENTIMENT_COLORS[customer.sentiment as keyof typeof SENTIMENT_COLORS]} bg-${SENTIMENT_COLORS[customer.sentiment as keyof typeof SENTIMENT_COLORS]}/10`
-                                  )}>
+                                  <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
+                                    style={{
+                                      color: SENTIMENT_COLORS[customer.sentiment as keyof typeof SENTIMENT_COLORS],
+                                      backgroundColor: `${SENTIMENT_COLORS[customer.sentiment as keyof typeof SENTIMENT_COLORS]}10`
+                                    }}
+                                  >
                                     {getSentimentIcon(customer.sentiment)}
                                     <span className="capitalize">{customer.sentiment.replace('-', ' ')}</span>
                                   </div>
@@ -625,10 +629,12 @@ const CustomerEngagement = () => {
                             <div>
                               <div className="flex justify-between mb-1">
                                 <div className="text-sm">Sentiment Analysis</div>
-                                <div className={cn(
-                                  "text-xs px-2 py-0.5 rounded-full flex items-center gap-1",
-                                  `text-${SENTIMENT_COLORS[selectedCustomerData.sentiment as keyof typeof SENTIMENT_COLORS]} bg-${SENTIMENT_COLORS[selectedCustomerData.sentiment as keyof typeof SENTIMENT_COLORS]}/10`
-                                )}>
+                                <div className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1"
+                                  style={{
+                                    color: SENTIMENT_COLORS[selectedCustomerData.sentiment as keyof typeof SENTIMENT_COLORS],
+                                    backgroundColor: `${SENTIMENT_COLORS[selectedCustomerData.sentiment as keyof typeof SENTIMENT_COLORS]}10`
+                                  }}
+                                >
                                   {getSentimentIcon(selectedCustomerData.sentiment)}
                                   <span className="capitalize">{selectedCustomerData.sentiment.replace('-', ' ')}</span>
                                 </div>
