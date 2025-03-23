@@ -1,28 +1,32 @@
 
-import React from 'react';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SettingsPanel from '@/components/settings/SettingsPanel';
-import { useMode } from '@/context/ModeContext';
-import { cn } from '@/lib/utils';
+import Nav from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import OnboardingWizard from '@/components/settings/OnboardingWizard';
 
-const Settings = () => {
-  const { mode } = useMode();
+export default function Settings() {
+  const [searchParams] = useSearchParams();
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  
+  useEffect(() => {
+    const onboarding = searchParams.get('onboarding');
+    setShowOnboarding(onboarding === 'true');
+  }, [searchParams]);
   
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
-      <main className={cn(
-        "flex-1 pt-28 pb-20 px-6 md:px-8",
-        mode === 'autonomous' ? "bg-autonomous-muted/5" : "bg-assisted-muted/5"
-      )}>
-        <SettingsPanel />
-      </main>
-      
+      <Nav />
+      <div className="container flex-1 py-12">
+        {showOnboarding ? (
+          <OnboardingWizard />
+        ) : (
+          <SettingsPanel />
+        )}
+      </div>
       <Footer />
     </div>
   );
-};
-
-export default Settings;
+}
