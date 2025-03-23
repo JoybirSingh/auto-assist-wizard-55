@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -60,7 +59,7 @@ const mockSequences: Sequence[] = [
       {
         id: 's1',
         type: 'connection',
-        content: 'Hi {{first_name}}, I noticed your work at {{company}} in the software space. I'd love to connect and share insights about the industry.',
+        content: "Hi {{first_name}}, I noticed your work at {{company}} in the software space. I'd love to connect and share insights about the industry.",
         enabled: true,
       },
       {
@@ -73,7 +72,7 @@ const mockSequences: Sequence[] = [
       {
         id: 's3',
         type: 'message',
-        content: 'Thanks for connecting, {{first_name}}! I help companies like {{company}} with software development solutions. Would you be open to a quick chat about your current projects?',
+        content: "Thanks for connecting, {{first_name}}! I help companies like {{company}} with software development solutions. Would you be open to a quick chat about your current projects?",
         enabled: true,
       }
     ],
@@ -90,7 +89,7 @@ const mockSequences: Sequence[] = [
       {
         id: 's1',
         type: 'connection',
-        content: 'Hi {{first_name}}, I came across your profile while researching marketing leaders at {{company}}. Would love to connect!',
+        content: "Hi {{first_name}}, I came across your profile while researching marketing leaders at {{company}}. Would love to connect!",
         enabled: true,
       },
       {
@@ -103,7 +102,7 @@ const mockSequences: Sequence[] = [
       {
         id: 's3',
         type: 'message',
-        content: 'Thanks for connecting, {{first_name}}! I noticed {{company}} has been doing impressive work in the {{industry}} space. I'd love to learn more about your marketing strategies if you're open to a conversation.',
+        content: "Thanks for connecting, {{first_name}}! I noticed {{company}} has been doing impressive work in the {{industry}} space. I'd love to learn more about your marketing strategies if you're open to a conversation.",
         enabled: true,
       }
     ],
@@ -115,13 +114,13 @@ const mockSequences: Sequence[] = [
 ];
 
 const personalizationVariables = [
-  { name: 'first_name', description: 'Lead\'s first name' },
-  { name: 'last_name', description: 'Lead\'s last name' },
-  { name: 'full_name', description: 'Lead\'s full name' },
-  { name: 'company', description: 'Lead\'s company name' },
-  { name: 'title', description: 'Lead\'s job title' },
-  { name: 'industry', description: 'Lead\'s industry' },
-  { name: 'mutual_connections', description: 'Number of mutual connections' },
+  { name: 'first_name', description: "Lead's first name" },
+  { name: 'last_name', description: "Lead's last name" },
+  { name: 'full_name', description: "Lead's full name" },
+  { name: 'company', description: "Lead's company name" },
+  { name: 'title', description: "Lead's job title" },
+  { name: 'industry', description: "Lead's industry" },
+  { name: 'mutual_connections', description: "Number of mutual connections" },
 ];
 
 const ConnectionSequences = () => {
@@ -229,7 +228,7 @@ const ConnectionSequences = () => {
         {
           id: `step-${Date.now()}`,
           type: 'connection',
-          content: 'Hi {{first_name}}, I noticed your profile and would like to connect.',
+          content: "Hi {{first_name}}, I noticed your profile and would like to connect.",
           enabled: true,
         }
       ],

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -63,7 +64,7 @@ const mockSequences: FollowUpSequence[] = [
       {
         id: 's1',
         type: 'message',
-        content: 'Hi {{first_name}}, it was great meeting you today. I\'ve attached the materials we discussed. Let me know if you have any questions.',
+        content: "Hi {{first_name}}, it was great meeting you today. I've attached the materials we discussed. Let me know if you have any questions.",
         enabled: true,
       },
       {
@@ -76,7 +77,7 @@ const mockSequences: FollowUpSequence[] = [
       {
         id: 's3',
         type: 'message',
-        content: 'Hello {{first_name}}, I wanted to follow up on our conversation about {{product_name}}. Have you had a chance to review the materials?',
+        content: "Hello {{first_name}}, I wanted to follow up on our conversation about {{product_name}}. Have you had a chance to review the materials?",
         enabled: true,
       },
       {
@@ -113,7 +114,7 @@ const mockSequences: FollowUpSequence[] = [
       {
         id: 's3',
         type: 'message',
-        content: 'Hello {{first_name}}, I'm following up on the proposal I sent. I'd be happy to address any questions or concerns you might have.',
+        content: "Hello {{first_name}}, I'm following up on the proposal I sent. I'd be happy to address any questions or concerns you might have.",
         enabled: true,
       },
       {
@@ -132,11 +133,11 @@ const mockSequences: FollowUpSequence[] = [
 ];
 
 const personalizationVariables = [
-  { name: 'first_name', description: 'Lead\'s first name' },
-  { name: 'last_name', description: 'Lead\'s last name' },
-  { name: 'full_name', description: 'Lead\'s full name' },
-  { name: 'company', description: 'Lead\'s company name' },
-  { name: 'title', description: 'Lead\'s job title' },
+  { name: 'first_name', description: "Lead's first name" },
+  { name: 'last_name', description: "Lead's last name" },
+  { name: 'full_name', description: "Lead's full name" },
+  { name: 'company', description: "Lead's company name" },
+  { name: 'title', description: "Lead's job title" },
   { name: 'product_name', description: 'Your product or service name' },
   { name: 'meeting_date', description: 'Date of your last meeting' },
 ];
