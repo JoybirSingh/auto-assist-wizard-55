@@ -22,6 +22,7 @@ import ConnectionAutomation from "./pages/ConnectionAutomation";
 import FollowUpCenter from "./pages/FollowUpCenter";
 import PersonalGrowth from "./pages/PersonalGrowth";
 import OrganizationalTools from "./pages/OrganizationalTools";
+import LinkedInCompliance from "./pages/LinkedInCompliance";
 
 // Import framer-motion for animations
 import { MotionConfig } from "framer-motion";
@@ -54,6 +55,7 @@ const App = () => (
                 {/* New Routes */}
                 <Route path="/personal-growth" element={<PersonalGrowth />} />
                 <Route path="/organizational-tools" element={<OrganizationalTools />} />
+                <Route path="/linkedin-compliance" element={<LinkedInCompliance />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
