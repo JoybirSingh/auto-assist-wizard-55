@@ -23,6 +23,8 @@ import FollowUpCenter from "./pages/FollowUpCenter";
 import PersonalGrowth from "./pages/PersonalGrowth";
 import OrganizationalTools from "./pages/OrganizationalTools";
 import LinkedInCompliance from "./pages/LinkedInCompliance";
+import DigitalTwin from "./pages/DigitalTwin";
+import RelationshipIntelligence from "./pages/RelationshipIntelligence";
 
 // Import framer-motion for animations
 import { MotionConfig } from "framer-motion";
@@ -52,10 +54,12 @@ const App = () => (
                 <Route path="/content-optimization" element={<ContentOptimization />} />
                 <Route path="/connection-automation" element={<ConnectionAutomation />} />
                 <Route path="/follow-up-center" element={<FollowUpCenter />} />
-                {/* New Routes */}
                 <Route path="/personal-growth" element={<PersonalGrowth />} />
                 <Route path="/organizational-tools" element={<OrganizationalTools />} />
                 <Route path="/linkedin-compliance" element={<LinkedInCompliance />} />
+                {/* New Strategic Feature Routes */}
+                <Route path="/digital-twin" element={<DigitalTwin />} />
+                <Route path="/relationship-intelligence" element={<RelationshipIntelligence />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

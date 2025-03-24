@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import { useMode } from '@/context/ModeContext';
 import ModeToggle from '@/components/ui/ModeToggle';
 import { cn } from '@/lib/utils';
-import { Activity, CheckCircle2, AlertTriangle, Crown, Target, Users, ArrowRight, Shield } from 'lucide-react';
+import { Activity, CheckCircle2, AlertTriangle, Crown, Target, Users, ArrowRight, Shield, Brain, Link } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import UsageStats from './UsageStats';
 
 const DashboardHeader = () => {
@@ -55,12 +55,12 @@ const DashboardHeader = () => {
         <div className="flex flex-col items-center gap-4">
           <ModeToggle />
           
-          <Link to="/settings?onboarding=true">
+          <RouterLink to="/settings?onboarding=true">
             <Button variant="outline" size="sm" className="flex items-center gap-1.5">
               <Crown className="w-3.5 h-3.5" />
               <span>Setup Wizard</span>
             </Button>
-          </Link>
+          </RouterLink>
           
           {mode === 'autonomous' && (
             <div className="flex items-center gap-2 text-xs font-medium text-amber-600 bg-amber-50 px-3 py-1.5 rounded-full dark:bg-amber-900/20 dark:text-amber-400">
@@ -75,7 +75,7 @@ const DashboardHeader = () => {
         <UsageStats />
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Link to="/personal-growth">
+          <RouterLink to="/personal-growth">
             <motion.div 
               className="p-5 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 border border-purple-100 dark:from-purple-900/20 dark:to-indigo-900/20 dark:border-purple-800/40 dark:hover:from-purple-900/30 dark:hover:to-indigo-900/30 transition-all"
               whileHover={{ y: -5 }}
@@ -95,9 +95,9 @@ const DashboardHeader = () => {
                 <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </motion.div>
-          </Link>
+          </RouterLink>
           
-          <Link to="/linkedin-compliance">
+          <RouterLink to="/linkedin-compliance">
             <motion.div 
               className="p-5 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 border border-blue-100 dark:from-blue-900/20 dark:to-cyan-900/20 dark:border-blue-800/40 dark:hover:from-blue-900/30 dark:hover:to-cyan-900/30 transition-all"
               whileHover={{ y: -5 }}
@@ -117,7 +117,52 @@ const DashboardHeader = () => {
                 <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </motion.div>
-          </Link>
+          </RouterLink>
+          
+          {/* New Strategic Features */}
+          <RouterLink to="/digital-twin">
+            <motion.div 
+              className="p-5 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border border-purple-100 dark:from-purple-900/20 dark:to-pink-900/20 dark:border-purple-800/40 dark:hover:from-purple-900/30 dark:hover:to-pink-900/30 transition-all"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400">
+                  <Brain className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold">Digital Twin</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                Train an AI to write and respond in your authentic personal style.
+              </p>
+              <Button size="sm" variant="ghost" className="gap-1">
+                <span>Start Training</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Button>
+            </motion.div>
+          </RouterLink>
+          
+          <RouterLink to="/relationship-intelligence">
+            <motion.div 
+              className="p-5 rounded-xl bg-gradient-to-br from-blue-50 to-green-50 hover:from-blue-100 hover:to-green-100 border border-blue-100 dark:from-blue-900/20 dark:to-green-900/20 dark:border-blue-800/40 dark:hover:from-blue-900/30 dark:hover:to-green-900/30 transition-all"
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
+                  <Link className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold">Relationship Intel</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                Strategically manage and nurture your professional network.
+              </p>
+              <Button size="sm" variant="ghost" className="gap-1">
+                <span>View Network</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Button>
+            </motion.div>
+          </RouterLink>
         </div>
       </div>
     </div>
