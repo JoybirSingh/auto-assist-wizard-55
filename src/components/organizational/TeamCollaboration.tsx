@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -201,7 +200,7 @@ const TeamCollaboration = () => {
     },
     {
       id: '4',
-      title: 'What's Your Biggest Marketing Challenge?',
+      title: "What's Your Biggest Marketing Challenge?",
       type: 'poll',
       status: 'published',
       author: 'Michael Chen',
