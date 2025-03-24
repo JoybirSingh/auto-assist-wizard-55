@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -788,4 +789,200 @@ const TeamCollaboration = () => {
         <TabsContent value="content">
           <Card>
             <CardHeader>
-              <div className
+              <div className="flex justify-between items-center">
+                <div>
+                  <CardTitle>Content Calendar</CardTitle>
+                  <CardDescription>
+                    Plan and schedule LinkedIn content
+                  </CardDescription>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline">
+                    <CalendarDays className="w-4 h-4 mr-2" />
+                    <span>Calendar View</span>
+                  </Button>
+                  <Button>
+                    <PlusCircle className="w-4 h-4 mr-2" />
+                    <span>Create Content</span>
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="bg-muted p-3 flex justify-between items-center">
+                    <h3 className="font-medium">July 2023</h3>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="icon">
+                        <ChevronDown className="h-4 w-4" />
+                      </Button>
+                      <Button variant="outline" size="sm">Today</Button>
+                    </div>
+                  </div>
+                  
+                  <div className="p-3 space-y-3">
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-medium flex items-center">
+                        <span>This Week</span>
+                        <Badge className="ml-2">Now</Badge>
+                      </h4>
+                      <div className="space-y-2">
+                        {contentPlans.filter(plan => new Date(plan.publishDate) >= new Date() && new Date(plan.publishDate) <= new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)).map((plan) => (
+                          <div key={plan.id} className="flex items-center justify-between p-3 border rounded-lg">
+                            <div className="flex items-center gap-3">
+                              <div className={cn(
+                                "p-2 rounded-full",
+                                plan.type === 'post' ? "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400" : 
+                                plan.type === 'article' ? "bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400" : 
+                                plan.type === 'video' ? "bg-rose-100 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400" : 
+                                "bg-amber-100 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400"
+                              )}>
+                                {plan.type === 'post' ? <MessageSquare className="w-4 h-4" /> : 
+                                plan.type === 'article' ? <FileText className="w-4 h-4" /> : 
+                                plan.type === 'video' ? <FileSpreadsheet className="w-4 h-4" /> : 
+                                <BarChart2 className="w-4 h-4" />}
+                              </div>
+                              <div>
+                                <div className="font-medium text-sm">{plan.title}</div>
+                                <div className="flex items-center text-xs text-muted-foreground">
+                                  <span>{new Date(plan.publishDate).toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'})} • </span>
+                                  <Avatar className="h-4 w-4 mx-1">
+                                    <AvatarFallback className="text-[8px]">
+                                      {plan.author.split(' ').map(n => n[0]).join('')}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <span>{plan.author}</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge variant={
+                                plan.status === 'published' ? "default" : 
+                                plan.status === 'scheduled' ? "secondary" : 
+                                "outline"
+                              }>
+                                {plan.status}
+                              </Badge>
+                              <Button size="sm" variant="outline">Edit</Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-medium">Published</h4>
+                      <div className="space-y-2">
+                        {contentPlans.filter(plan => plan.status === 'published').map((plan) => (
+                          <div key={plan.id} className="flex items-center justify-between p-3 border rounded-lg">
+                            <div className="flex items-center gap-3">
+                              <div className={cn(
+                                "p-2 rounded-full",
+                                plan.type === 'post' ? "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400" : 
+                                plan.type === 'article' ? "bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400" : 
+                                plan.type === 'video' ? "bg-rose-100 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400" : 
+                                "bg-amber-100 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400"
+                              )}>
+                                {plan.type === 'post' ? <MessageSquare className="w-4 h-4" /> : 
+                                plan.type === 'article' ? <FileText className="w-4 h-4" /> : 
+                                plan.type === 'video' ? <FileSpreadsheet className="w-4 h-4" /> : 
+                                <BarChart2 className="w-4 h-4" />}
+                              </div>
+                              <div>
+                                <div className="font-medium text-sm">{plan.title}</div>
+                                <div className="flex items-center text-xs text-muted-foreground">
+                                  <span>{new Date(plan.publishDate).toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'})} • </span>
+                                  <Avatar className="h-4 w-4 mx-1">
+                                    <AvatarFallback className="text-[8px]">
+                                      {plan.author.split(' ').map(n => n[0]).join('')}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <span>{plan.author}</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                              {plan.engagement && (
+                                <div className="flex items-center gap-3 mr-2">
+                                  <div className="flex items-center">
+                                    <Eye className="w-3.5 h-3.5 text-muted-foreground mr-1" />
+                                    <span>{plan.engagement.views.toLocaleString()}</span>
+                                  </div>
+                                  <div className="flex items-center">
+                                    <MessageSquare className="w-3.5 h-3.5 text-muted-foreground mr-1" />
+                                    <span>{plan.engagement.comments}</span>
+                                  </div>
+                                </div>
+                              )}
+                              <Button size="sm" variant="outline">View</Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="pt-4 border-t">
+                  <h3 className="text-sm font-medium mb-3">Content Performance</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="p-4 border rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-medium">Posts</h4>
+                        <Badge variant="outline">Last 30 days</Badge>
+                      </div>
+                      <div className="text-3xl font-bold mb-1">12</div>
+                      <div className="text-xs text-green-600 flex items-center">
+                        <ArrowUpRight className="w-3 h-3 mr-1" />
+                        <span>+33% from last month</span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 border rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-medium">Average Engagement</h4>
+                        <Badge variant="outline">Last 30 days</Badge>
+                      </div>
+                      <div className="text-3xl font-bold mb-1">8.7%</div>
+                      <div className="text-xs text-green-600 flex items-center">
+                        <ArrowUpRight className="w-3 h-3 mr-1" />
+                        <span>+1.2% from last month</span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 border rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-medium">Profile Views</h4>
+                        <Badge variant="outline">Last 30 days</Badge>
+                      </div>
+                      <div className="text-3xl font-bold mb-1">1,247</div>
+                      <div className="text-xs text-green-600 flex items-center">
+                        <ArrowUpRight className="w-3 h-3 mr-1" />
+                        <span>+18% from last month</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="border-t pt-6 flex justify-end">
+              <div className="flex gap-3">
+                <Button variant="outline" className="gap-2">
+                  <Bell className="w-4 h-4" />
+                  <span>Set Reminders</span>
+                </Button>
+                <Button className="gap-2">
+                  <Zap className="w-4 h-4" />
+                  <span>AI Content Ideas</span>
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+};
+
+export default TeamCollaboration;
