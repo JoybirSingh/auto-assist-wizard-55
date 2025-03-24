@@ -23,6 +23,7 @@ const DigitalTwin = () => {
   const [tonePreference, setTonePreference] = React.useState<number[]>([50]);
   const [creativityLevel, setCreativityLevel] = React.useState<number[]>([60]);
   const [autoLearn, setAutoLearn] = React.useState(true);
+  const [activeTab, setActiveTab] = React.useState('train');
   
   const handleAddSample = () => {
     if (sampleText.trim()) {
@@ -82,6 +83,10 @@ const DigitalTwin = () => {
       description: "The generated content has been copied to your clipboard.",
     });
   };
+
+  const navigateToTab = (tabValue: string) => {
+    setActiveTab(tabValue);
+  };
   
   return (
     <Layout>
@@ -113,7 +118,7 @@ const DigitalTwin = () => {
           </div>
         </div>
         
-        <Tabs defaultValue="train">
+        <Tabs defaultValue="train" value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto mb-4">
             <TabsTrigger value="train" className="flex items-center gap-1.5">
               <Brain className="w-4 h-4" />
@@ -217,7 +222,7 @@ const DigitalTwin = () => {
                     <p className="text-muted-foreground max-w-md mx-auto">
                       Before generating content, you need to train your Digital Twin with at least 3 writing samples.
                     </p>
-                    <Button onClick={() => document.querySelector('[data-value="train"]')?.click()}>
+                    <Button onClick={() => navigateToTab('train')}>
                       Go to Training
                     </Button>
                   </div>
